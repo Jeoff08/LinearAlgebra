@@ -1,0 +1,171 @@
+linear Algebra Table of Content
+
+
+1 What is Linear Algebra? 
+1.1 Organizing Information . . . . . . . . . . . . . . . . . . . . . . 
+1.2 What are Vectors? . . . . . . . . . . . . . . . . . . . . . . . . 
+1.3 What are Linear Functions? . . . . . . . . . . . . . . . . . . . 
+1.4 So, What is a Matrix? . . . . . . . . . . . . . . . . . . . . . . 
+1.4.1 Matrix Multiplication is Composition of Functions . . . 
+1.4.2 The Matrix Detour . . . . . . . . . . . . . . . . . . . . 
+1.5 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+2 Systems of Linear Equations 
+2.1 Gaussian Elimination . . . . . . . . . . . . . . . . . . . . . . . 
+2.1.1 Augmented Matrix Notation . . . . . . . . . . . . . . . 
+2.1.2 Equivalence and the Act of Solving . . . . . . . . . . . 
+2.1.3 Reduced Row Echelon Form . . . . . . . . . . . . . . . 
+2.1.4 Solution Sets and RREF . . . . . . . . . . . . . . . . . 
+2.2 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+2.3 Elementary Row Operations . . . . . . . . . . . . . . . . . . . 
+2.3.1 EROs and Matrices . . . . . . . . . . . . . . . . . . . . 
+2.3.2 Recording EROs in (M|I ) . . . . . . . . . . . . . . . . 
+2.3.3 The Three Elementary Matrices . . . . . . . . . . . . . 
+2.3.4 LU, LDU, and P LDU Factorizations . . . . . . . . . . 
+2.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+2.5 Solution Sets for Systems of Linear Equations . . . . . . . . . 
+2.5.1 The Geometry of Solution Sets: Hyperplanes . . . . . . 
+2.5.2 Particular Solution + Homogeneous Solutions . . . . . 
+2.5.3 Solutions and Linearity . . . . . . . . . . . . . . . . . . 
+2.6 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+3 The Simplex Method 
+3.1 Pablo’s Problem . . . . . . . . . . . . . . . . . . . . . . . . . . 
+3.2 Graphical Solutions . . . . . . . . . . . . . . . . . . . . . . . . 
+3.3 Dantzig’s Algorithm . . . . . . . . . . . . . . . . . . . . . . . 
+3.4 Pablo Meets Dantzig . . . . . . . . . . . . . . . . . . . . . . . 
+3.5 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+4 Vectors in Space, n-Vectors 
+4.1 Addition and Scalar Multiplication in R
+n
+. . . . . . . . . . . . 
+4.2 Hyperplanes . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+4.3 Directions and Magnitudes . . . . . . . . . . . . . . . . . . . . 
+4.4 Vectors, Lists and Functions: R
+S
+. . . . . . . . . . . . . . . . 
+4.5 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+5 Vector Spaces 
+5.1 Examples of Vector Spaces . . . . . . . . . . . . . . . . . . . . 
+5.1.1 Non-Examples . . . . . . . . . . . . . . . . . . . . . . . 
+5.2 Other Fields . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+5.3 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+6 Linear Transformations 
+6.1 The Consequence of Linearity . . . . . . . . . . . . . . . . . . 
+6.2 Linear Functions on Hyperplanes . . . . . . . . . . . . . . . . 
+6.3 Linear Differential Operators . . . . . . . . . . . . . . . . . . . 
+6.4 Bases (Take 1) . . . . . . . . . . . . . . . . . . . . . . . . . . 
+6.5 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+7 Matrices 
+7.1 Linear Transformations and Matrices . . . . . . . . . . . . . . 
+7.1.1 Basis Notation . . . . . . . . . . . . . . . . . . . . . . 
+7.1.2 From Linear Operators to Matrices . . . . . . . . . . . 
+7.2 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+7.3 Properties of Matrices . . . . . . . . . . . . . . . . . . . . . . 
+7.3.1 Associativity and Non-Commutativity . . . . . . . . . 
+7.3.2 Block Matrices . . . . . . . . . . . . . . . . . . . . . . 
+7.3.3 The Algebra of Square Matrices . . . . . . . . . . . . 
+7.3.4 Trace . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+7.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+7.5 Inverse Matrix . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+7.5.1 Three Properties of the Inverse . . . . . . . . . . . . . 
+7.5.2 Finding Inverses (Redux) . . . . . . . . . . . . . . . . . 
+7.5.3 Linear Systems and Inverses . . . . . . . . . . . . . . . 
+7.5.4 Homogeneous Systems . . . . . . . . . . . . . . . . . . 
+7.5.5 Bit Matrices . . . . . . . . . . . . . . . . . . . . . . . . 
+7.6 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+7.7 LU Redux . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+7.7.1 Using LU Decomposition to Solve Linear Systems . . . 
+7.7.2 Finding an LU Decomposition. . . . . . . . . . . . . . 
+7.7.3 Block LDU Decomposition . . . . . . . . . . . . . . . . 
+7.8 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+8 Determinants 
+8.1 The Determinant Formula . . . . . . . . . . . . . . . . . . . . 
+8.1.1 Simple Examples . . . . . . . . . . . . . . . . . . . . . 
+8.1.2 Permutations . . . . . . . . . . . . . . . . . . . . . . . 
+8.2 Elementary Matrices and Determinants . . . . . . . . . . . . . 
+8.2.1 Row Swap . . . . . . . . . . . . . . . . . . . . . . . . . 
+8.2.2 Row Multiplication . . . . . . . . . . . . . . . . . . . . 
+8.2.3 Row Addition . . . . . . . . . . . . . . . . . . . . . . . 
+8.2.4 Determinant of Products . . . . . . . . . . . . . . . . . 
+8.3 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+8.4 Properties of the Determinant . . . . . . . . . . . . . . . . . . 
+8.4.1 Determinant of the Inverse . . . . . . . . . . . . . . . . 
+8.4.2 Adjoint of a Matrix . . . . . . . . . . . . . . . . . . . . 
+8.4.3 Application: Volume of a Parallelepiped . . . . . . . . 
+8.5 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+9 Subspaces and Spanning Sets 
+9.1 Subspaces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+9.2 Building Subspaces . . . . . . . . . . . . . . . . . . . . . . . . 
+
+9.3 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+10 Linear Independence 203
+10.1 Showing Linear Dependence . . . . . . . . . . . . . . . . . . . 
+10.2 Showing Linear Independence . . . . . . . . . . . . . . . . . .
+10.3 From Dependent Independent . . . . . . . . . . . . . . . . . . 
+10.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+11 Basis and Dimension 213
+11.1 Bases in R
+n
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+11.2 Matrix of a Linear Transformation (Redux) . . . . . . . . . . 
+11.3 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+12 Eigenvalues and Eigenvectors 
+12.1 Invariant Directions . . . . . . . . . . . . . . . . . . . . . . . . 
+12.2 The Eigenvalue–Eigenvector Equation . . . . . . . . . . . . . . 
+12.3 Eigenspaces . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+12.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+13 Diagonalization 
+13.1 Diagonalizability . . . . . . . . . . . . . . . . . . . . . . . . . 
+13.2 Change of Basis . . . . . . . . . . . . . . . . . . . . . . . . . . 
+13.3 Changing to a Basis of Eigenvectors . . . . . . . . . . . . . . . 
+13.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+14 Orthonormal Bases and Complements 
+14.1 Properties of the Standard Basis . . . . . . . . . . . . . . . . . 
+14.2 Orthogonal and Orthonormal Bases . . . . . . . . . . . . . . . 
+14.2.1 Orthonormal Bases and Dot Products . . . . . . . . . . 
+14.3 Relating Orthonormal Bases . . . . . . . . . . . . . . . . . . . 
+14.4 Gram-Schmidt & Orthogonal Complements . . . . . . . . . .
+14.4.1 The Gram-Schmidt Procedure . . . . . . . . . . . . . . 
+14.5 QR Decomposition . . . . . . . . . . . . . . . . . . . . . . . . 
+14.6 Orthogonal Complements . . . . . . . . . . . . . . . . . . . . 
+14.7 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+15 Diagonalizing Symmetric Matrices 
+15.1 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+16 Kernel, Range, Nullity, Rank 
+16.1 Range . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+16.2 Image . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+16.2.1 One-to-one and Onto . . . . . . . . . . . . . . . . . . 
+16.2.2 Kernel . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+16.3 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+16.4 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+17 Least squares and Singular Values 
+17.1 Projection Matrices . . . . . . . . . . . . . . . . . . . . . . . . 
+17.2 Singular Value Decomposition . . . . . . . . . . . . . . . . . . 
+17.3 Review Problems . . . . . . . . . . . . . . . . . . . . . . . . . 
+A List of Symbols 
+B Fields 
+C Online Resources 
+D Sample First Midterm 
+E Sample Second Midterm 
+F Sample Final Exam 
+G Movie Scripts 
+G.1 What is Linear Algebra? . . . . . . . . . . . . . . . . . . . . . 
+G.2 Systems of Linear Equations . . . . . . . . . . . . . . . . . . . 
+G.3 Vectors in Space n-Vectors . . . . . . . . . . . . . . . . . . . . 
+G.4 Vector Spaces . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+G.5 Linear Transformations . . . . . . . . . . . . . . . . . . . . . . 
+G.6 Matrices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+G.7 Determinants . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+G.8 Subspaces and Spanning Sets . . . . . . . . . . . . . . . . . . 
+G.9 Linear Independence . . . . . . . . . . . . . . . . . . . . . . . 
+G.10 Basis and Dimension . . . . . . . . . . . . . . . . . . . . . . . 
+G.11 Eigenvalues and Eigenvectors . . . . . . . . . . . . . . . . . . 
+G.12 Diagonalization . . . . . . . . . . . . . . . . . . . . . . . . . . 
+G.13 Orthonormal Bases and Complements . . . . . . . . . . . . . . 
+
+G.14 Diagonalizing Symmetric Matrices . . . . . . . . . . . . . . . . 
+G.15 Kernel, Range, Nullity, Rank . . . . . . . . . . . . . . . . . . . 
+G.16 Least Squares and Singular Values . . . . . . . . . . . . . . . . 
+Index 432
