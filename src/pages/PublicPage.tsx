@@ -84,6 +84,10 @@ export default function PublicPage() {
     }, 300);
   };
 
+  const handleAllCalculatorsClick = () => {
+    navigate('/calculators');
+  };
+
   return (
     <div className="space-y-8">
       <p className="mt-3 text-(--muted)">
@@ -167,7 +171,27 @@ export default function PublicPage() {
         </div>
       </section>
 
-      <MathCalculator />
+      {/* Calculator Section */}
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="m-0 font-[Fraunces] text-2xl">Calculators</h2>
+            <p className="mt-1 text-sm text-(--muted)">
+              Quick math solver with OCR — or click below for all calculators.
+            </p>
+          </div>
+          <button
+            onClick={handleAllCalculatorsClick}
+            className="rounded-lg bg-indigo-500 px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-500/25"
+          >
+            All Calculators →
+          </button>
+        </div>
+
+        <div className="animate-in fade-in duration-300">
+          <MathCalculator />
+        </div>
+      </section>
     </div>
   );
 }

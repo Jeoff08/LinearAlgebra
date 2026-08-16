@@ -1,3 +1,4 @@
+// App.tsx
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -8,7 +9,9 @@ import LoginPage from "./pages/LoginPage";
 import PublicPage from "./pages/PublicPage";
 import RegisterPage from "./pages/RegisterPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
-
+import CalculatorApp from "./calculators/CalculatorApp";
+// Make sure the file exists at this path
+import CalculatorsPage from "./pages/CalculatorsPage";
 
 export default function App() {
   return (
@@ -32,6 +35,8 @@ export default function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/calculator" element={<CalculatorApp />} />
+              <Route path="/calculators" element={<CalculatorsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
