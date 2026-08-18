@@ -31,22 +31,22 @@ import {
   Sliders
 } from "lucide-react";
 
-// Floating mathematical numbers & symbols for GSAP animation - Deep Graphite & Lime Compute theme
+// Floating mathematical numbers & symbols for GSAP animation
 const MATH_PARTICLES = [
-  { id: 1, text: "λ", size: "text-3xl sm:text-4xl", top: "10%", left: "8%", colorDark: "text-[#B6FF2E]", colorLight: "text-[#1F2329]", blur: "blur-[0.5px]" },
+  { id: 1, text: "λ", size: "text-3xl sm:text-4xl", top: "8%", left: "58%", colorDark: "text-[#B6FF2E]", colorLight: "text-[#1F2329]", blur: "blur-[0.5px]" },
   { id: 2, text: "det(A)", size: "text-xl sm:text-2xl", top: "18%", left: "85%", colorDark: "text-lime-300", colorLight: "text-slate-800", blur: "none" },
-  { id: 3, text: "π ≈ 3.1415", size: "text-sm sm:text-base", top: "68%", left: "6%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-700", blur: "blur-[0.3px]" },
+  { id: 3, text: "π ≈ 3.1415", size: "text-sm sm:text-base", top: "68%", left: "62%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-700", blur: "blur-[0.3px]" },
   { id: 4, text: "Ax = b", size: "text-2xl sm:text-3xl", top: "78%", left: "88%", colorDark: "text-lime-400", colorLight: "text-[#1F2329]", blur: "none" },
-  { id: 5, text: "∑ xᵢ", size: "text-2xl sm:text-3xl", top: "42%", left: "4%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-800", blur: "none" },
+  { id: 5, text: "∑ xᵢ", size: "text-2xl sm:text-3xl", top: "42%", left: "55%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-800", blur: "none" },
   { id: 6, text: "ℝⁿ", size: "text-xl sm:text-2xl", top: "14%", left: "75%", colorDark: "text-lime-300", colorLight: "text-slate-700", blur: "blur-[0.2px]" },
   { id: 7, text: "e^{iπ} + 1 = 0", size: "text-base sm:text-lg", top: "58%", left: "92%", colorDark: "text-[#B6FF2E]", colorLight: "text-[#1F2329]", blur: "blur-[0.5px]" },
   { id: 8, text: "[1  0  0]", size: "text-xs sm:text-sm font-mono", top: "32%", left: "93%", colorDark: "text-lime-400", colorLight: "text-slate-800", blur: "none" },
-  { id: 9, text: "rank(A)", size: "text-sm sm:text-base", top: "86%", left: "16%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-700", blur: "none" },
+  { id: 9, text: "rank(A)", size: "text-sm sm:text-base", top: "86%", left: "68%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-700", blur: "none" },
   { id: 10, text: "∞", size: "text-4xl sm:text-5xl", top: "4%", left: "48%", colorDark: "text-[#B6FF2E]/80", colorLight: "text-slate-700/80", blur: "blur-[0.5px]" },
   { id: 11, text: "v⃗ · w⃗", size: "text-lg sm:text-xl", top: "48%", left: "84%", colorDark: "text-lime-300", colorLight: "text-slate-800", blur: "none" },
   { id: 12, text: "0 1 0 1", size: "text-xs sm:text-sm font-mono", top: "90%", left: "70%", colorDark: "text-[#B6FF2E]/80", colorLight: "text-slate-700/80", blur: "blur-[0.3px]" },
-  { id: 13, text: "dim(V)", size: "text-base sm:text-lg", top: "26%", left: "15%", colorDark: "text-lime-400", colorLight: "text-[#1F2329]", blur: "none" },
-  { id: 14, text: "σ₁ ≥ σ₂", size: "text-sm sm:text-base", top: "74%", left: "40%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-800", blur: "blur-[0.2px]" },
+  { id: 13, text: "dim(V)", size: "text-base sm:text-lg", top: "26%", left: "66%", colorDark: "text-lime-400", colorLight: "text-[#1F2329]", blur: "none" },
+  { id: 14, text: "σ₁ ≥ σ₂", size: "text-sm sm:text-base", top: "74%", left: "46%", colorDark: "text-[#B6FF2E]", colorLight: "text-slate-800", blur: "blur-[0.2px]" },
 ];
 
 export default function PublicPage() {
@@ -211,11 +211,11 @@ export default function PublicPage() {
       </div>
 
       {/* Swipeable View Container */}
-      <div className="relative z-10 overflow-hidden px-3 sm:px-6 md:px-10 pt-4 pb-12">
+      <div className="relative z-10 overflow-hidden pl-3 sm:pl-4 md:pl-8 pr-2 pt-1 pb-12">
         <AnimatePresence mode="wait" initial={false}>
           {activeView === "main" ? (
             /* ========================================================= */
-            /* VIEW 1: MAIN WORKSPACE OVERVIEW VIEW (REFERENCE LAYOUT)   */
+            /* VIEW 1: MAIN WORKSPACE OVERVIEW VIEW (LEFT-ALIGNED)       */
             /* ========================================================= */
             <motion.div
               key="main-view"
@@ -223,21 +223,12 @@ export default function PublicPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12 max-w-7xl mx-auto"
+              className="space-y-12 w-full"
             >
-              {/* HERO SECTION (TRANSLUCENT SEAMLESS OVER FULL-SCREEN math.jpeg) */}
-              <section className={`relative rounded-3xl overflow-hidden p-6 sm:p-10 lg:p-14 border shadow-2xl backdrop-blur-md text-left transition-all duration-300 ${
-                isDark 
-                  ? "border-blue-500/25 bg-gradient-to-r from-[#0b102b]/85 via-[#0e163d]/60 to-[#0b102b]/30 text-white shadow-black/80" 
-                  : "border-slate-200/80 bg-gradient-to-r from-white/90 via-white/70 to-white/30 text-[#1F2329] shadow-slate-300/60"
+              {/* HERO SECTION (SEAMLESS AND BORDERLESS OVER FULL-SCREEN math.jpeg) */}
+              <section className={`relative text-left transition-all duration-300 pt-0 pb-6 ${
+                isDark ? "text-white" : "text-[#1F2329]"
               }`}>
-                {/* Organic curved light accents */}
-                <div className={`pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full blur-3xl ${
-                  isDark ? "bg-[#3d5afe]/20" : "bg-blue-300/25"
-                }`} />
-                <div className={`pointer-events-none absolute -bottom-24 right-0 w-96 h-96 rounded-full blur-3xl ${
-                  isDark ? "bg-[#2979ff]/15" : "bg-indigo-200/20"
-                }`} />
 
                 {/* Hero Content (Left Aligned) */}
                 <div className="relative z-10 max-w-2xl">
@@ -278,10 +269,10 @@ export default function PublicPage() {
 
                     <button
                       onClick={() => setActiveView("topics")}
-                      className={`inline-flex items-center gap-2 rounded-xl border px-5 py-3 text-sm font-semibold backdrop-blur-md transition-all duration-200 hover:scale-[1.02] cursor-pointer ${
+                      className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold backdrop-blur-md transition-all duration-200 hover:scale-[1.02] cursor-pointer ${
                         isDark 
-                          ? "border-blue-400/40 bg-blue-950/50 hover:bg-blue-900/60 text-blue-100" 
-                          : "border-slate-300 bg-white/90 hover:bg-slate-100 text-slate-800 shadow-sm"
+                          ? "bg-blue-950/60 hover:bg-blue-900/70 text-blue-100 shadow-md" 
+                          : "bg-white/90 hover:bg-slate-100 text-slate-800 shadow-md"
                       }`}
                     >
                       <BookOpen className={`w-4 h-4 ${isDark ? "text-blue-300" : "text-blue-600"}`} />
@@ -314,10 +305,10 @@ export default function PublicPage() {
                         {/* Card 1 */}
                         <div
                           onClick={() => navigate("/calculators")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <Globe className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -330,10 +321,10 @@ export default function PublicPage() {
                         {/* Card 2 */}
                         <div
                           onClick={() => navigate("/calculators")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <Monitor className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -346,10 +337,10 @@ export default function PublicPage() {
                         {/* Card 3 */}
                         <div
                           onClick={() => navigate("/calculators")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <Smartphone className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -374,10 +365,10 @@ export default function PublicPage() {
                         {/* Card 4 */}
                         <div
                           onClick={() => navigate("/calculators")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <PieChart className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -390,10 +381,10 @@ export default function PublicPage() {
                         {/* Card 5 */}
                         <div
                           onClick={() => navigate("/calculators")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <Settings className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -406,10 +397,10 @@ export default function PublicPage() {
                         {/* Card 6 */}
                         <div
                           onClick={() => setActiveView("topics")}
-                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-md border transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
+                          className={`group flex flex-col justify-between p-4 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer min-h-[110px] ${
                             isDark 
-                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white border-blue-400/30" 
-                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white border-blue-600/30"
+                              ? "bg-[#2a45b8] hover:bg-[#3453d8] text-white" 
+                              : "bg-[#1e40af] hover:bg-[#1d3896] text-white"
                           }`}
                         >
                           <Sliders className="w-6 h-6 text-blue-200 group-hover:text-white transition-colors" />
@@ -696,14 +687,18 @@ export default function PublicPage() {
                           <Link
                             to={`/topics/${topic.id}`}
                             onClick={(e) => handleTopicClick(topic.id, e)}
-                            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200 no-underline ${
+                            className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-extrabold transition-all duration-200 no-underline shadow-sm hover:scale-105 ${
                               isDark 
-                                ? "bg-[#B6FF2E] text-[#1F2329] hover:bg-[#C6FF4D]" 
-                                : "bg-[#1F2329] text-[#B6FF2E] hover:bg-black"
+                                ? "bg-[#B6FF2E] hover:bg-[#C6FF4D]" 
+                                : "bg-[#1F2329] hover:bg-black"
                             }`}
+                            style={{
+                              color: isDark ? "#14171B" : "#B6FF2E",
+                              backgroundColor: isDark ? "#B6FF2E" : "#1F2329"
+                            }}
                           >
-                            <span>Read Topic</span>
-                            <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                            <span style={{ color: isDark ? "#14171B" : "#B6FF2E", fontWeight: 800 }}>Read Topic</span>
+                            <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" style={{ color: isDark ? "#14171B" : "#B6FF2E" }} />
                           </Link>
                         </div>
                       </motion.article>

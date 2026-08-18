@@ -7,7 +7,8 @@ import {
   ChevronLeft, 
   ArrowLeft, 
   Calculator, 
-  ChevronDown 
+  ChevronDown,
+  FlaskConical
 } from "lucide-react";
 import TOPICS from "../data/topics/index";
 
@@ -298,6 +299,62 @@ export default function TopicPage() {
     }
   };
 
+  // ─── Parse an example matrix from section content ────────────────────────────
+  const parseExampleMatrix = (content: string): number[][] | null => {
+    // Match patterns like: A = [2 1]\n[1 1]  or  [[2, 1], [1, 1]]  or  [2 1; 1 1]
+    // Strategy 1: Find rows like "[2 1]" or "[2, 1]" across consecutive lines
+    const rowPattern = /\[([\d\s,\.\-]+)\]/g;
+    const rows: number[][] = [];
+    let match;
+    while ((match = rowPattern.exec(content)) !== null) {
+      const nums = match[1].split(/[,\s]+/).filter(Boolean).map(Number).filter(n => !isNaN(n));
+      if (nums.length >= 2 && nums.length <= 4) {
+        rows.push(nums);
+      }
+      if (rows.length >= 4) break; // cap at 4x4
+    }
+    if (rows.length >= 2) {
+      // Ensure all rows same length
+      const colLen = rows[0].length;
+      const square = rows.filter(r => r.length === colLen).slice(0, colLen);
+      if (square.length >= 2) return square;
+    }
+    // Strategy 2: consecutive number-only lines like  "2 1" / "1 1"
+    const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
+    const numLines: number[][] = [];
+    for (const line of lines) {
+      const parts = line.split(/[,\s]+/).filter(Boolean).map(Number);
+      if (parts.length >= 2 && parts.length <= 4 && parts.every(n => !isNaN(n))) {
+        numLines.push(parts);
+      }
+      if (numLines.length >= 4) break;
+    }
+    if (numLines.length >= 2) {
+      const colLen = numLines[0].length;
+      const sq = numLines.filter(r => r.length === colLen).slice(0, colLen);
+      if (sq.length >= 2) return sq;
+    }
+    return null;
+  };
+
+  // ─── Try in Calculator handler ────────────────────────────────────────────
+  const handleTryInCalculator = (sectionNumber: number) => {
+    const content = getSectionContent(sectionNumber);
+    const matrix = parseExampleMatrix(content);
+    // Fire a custom event that the live calculator listens for
+    const event = new CustomEvent('try-in-calculator', {
+      detail: { matrix, content, sectionNumber },
+      bubbles: true
+    });
+    document.dispatchEvent(event);
+    // Flash a visual hint on the right-side calculator header
+    const header = document.getElementById('live-calc-header');
+    if (header) {
+      header.classList.add('ring-2', 'ring-[#B6FF2E]', 'ring-offset-2');
+      setTimeout(() => header.classList.remove('ring-2', 'ring-[#B6FF2E]', 'ring-offset-2'), 1200);
+    }
+  };
+
   // Synchronize calculator based on active topic and active slide section
   useEffect(() => {
     if (!topic) return;
@@ -467,10 +524,20 @@ export default function TopicPage() {
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--panel)] p-6 sm:p-8 min-h-[420px]">
             {/* Section Header */}
             <div className="flex items-start gap-3.5 mb-5 pb-4 border-b border-[var(--line)]">
-              <div className="flex-shrink-0">
+              {/* Section Number Badge + Try Button */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#B6FF2E] text-lg font-bold text-[#1F2329] shadow-lg shadow-[#B6FF2E]/25">
                   {section.number}
                 </div>
+                {/* Try in Calculator Button */}
+                <button
+                  onClick={() => handleTryInCalculator(section.number)}
+                  title="Paste example from this section into the calculator →"
+                  className="group inline-flex items-center gap-0.5 rounded-lg border border-[#B6FF2E]/40 bg-[#B6FF2E]/10 px-1.5 py-0.5 text-[0.6rem] font-extrabold text-[#B6FF2E] transition-all hover:bg-[#B6FF2E] hover:text-[#1F2329] hover:border-[#B6FF2E] hover:shadow-md hover:shadow-[#B6FF2E]/30 active:scale-95 cursor-pointer whitespace-nowrap"
+                >
+                  <FlaskConical className="w-2.5 h-2.5" />
+                  <span>Try</span>
+                </button>
               </div>
               <div className="flex-1 min-w-0">
                 <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-[#B6FF2E]">
@@ -664,7 +731,7 @@ export default function TopicPage() {
         <div className="sticky top-4 space-y-4">
           
           {/* Header with Calculator Selection Dropdown */}
-          <div className="relative z-20">
+          <div id="live-calc-header" className="relative z-20 rounded-xl transition-all duration-300">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#B6FF2E] text-[#1F2329] shadow-sm">

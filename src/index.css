@@ -472,12 +472,12 @@ html.light .ambient-overlay, :root[data-theme="light"] .ambient-overlay {
   box-shadow: var(--shadow);
 }
 
-:where(a) {
+:where(a:not([class*="rounded"]):not([class*="btn"]):not([class*="bg-"])) {
   color: #B6FF2E;
 }
 
-:where(html.light a) {
-  color: #3A6900;
+:where(html.light a:not([class*="rounded"]):not([class*="btn"]):not([class*="bg-"])) {
+  color: #1F2329;
 }
 
 code {
@@ -672,13 +672,40 @@ html.dark .bg-amber-50 {
   color: #FFFFFF !important;
 }
 
-/* Solution step banners in calculator components only (scoped to prevent interfering with hero & page gradients) */
+/* Calculator banner headers in dark mode */
+html.dark .calculator-wrapper-theme [class*="bg-gradient-to-"],
+html.dark .calculator-wrapper-theme .bg-indigo-50,
+html.dark .calculator-wrapper-theme .bg-blue-50,
+html.dark .calculator-wrapper-theme .bg-slate-50,
+html.dark .calculator-wrapper-theme .bg-emerald-50,
+html.dark .calculator-wrapper-theme .border-indigo-100,
+html.dark .calculator-wrapper-theme .border-blue-100,
+html.dark .calculator-wrapper-theme .border-slate-100,
+html.dark .calculator-wrapper-theme .border-slate-200,
 .calc-container .theme-dark [class*="bg-gradient-to-"],
 .calculator-wrapper-theme.theme-dark [class*="bg-gradient-to-"] {
   background-image: none !important;
-  background-color: #1F2329 !important;
+  background-color: #14171B !important;
   border-color: #333A46 !important;
   color: #FFFFFF !important;
+}
+
+html.dark .calculator-wrapper-theme h3,
+html.dark .calculator-wrapper-theme .text-indigo-800,
+html.dark .calculator-wrapper-theme .text-blue-800,
+html.dark .calculator-wrapper-theme .text-slate-800,
+html.dark .calculator-wrapper-theme .text-indigo-900,
+html.dark .calculator-wrapper-theme .text-blue-900 {
+  color: #FFFFFF !important;
+}
+
+html.dark .calculator-wrapper-theme p,
+html.dark .calculator-wrapper-theme .text-indigo-600,
+html.dark .calculator-wrapper-theme .text-blue-600,
+html.dark .calculator-wrapper-theme .text-slate-600,
+html.dark .calculator-wrapper-theme .text-indigo-700,
+html.dark .calculator-wrapper-theme .text-blue-700 {
+  color: #B6FF2E !important;
 }
 
 /* Solution pills & badges in dark mode */

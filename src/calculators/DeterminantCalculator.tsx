@@ -1,5 +1,5 @@
 // components/DeterminantCalculator.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PDFExport from './PDFExport';
 
 const DeterminantCalculator: React.FC = () => {
@@ -12,6 +12,32 @@ const DeterminantCalculator: React.FC = () => {
   const [steps, setSteps] = useState<{ step: string; explanation: string }[]>([]);
   const [error, setError] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
+  const solveRef = useRef<(() => void) | null>(null);
+
+  // Listen for "Try in Calculator" events dispatched from topic sections
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.matrix && Array.isArray(detail.matrix) && detail.matrix.length >= 2) {
+        const mat: number[][] = detail.matrix;
+        const n = mat.length as 2 | 3 | 4;
+        if (n >= 2 && n <= 4) {
+          setSize(n);
+          setMatrix(mat);
+          setResult('');
+          setSteps([]);
+          setError('');
+          setTimeout(() => solveRef.current?.(), 100);
+        }
+      }
+    };
+    document.addEventListener('try-in-calculator', handler);
+    return () => document.removeEventListener('try-in-calculator', handler);
+  }, []);
+
+  useEffect(() => {
+    solveRef.current = calculateDet;
+  });
 
   // Get minor matrix
   const getMinor = (matrix: number[][], row: number, col: number): number[][] => {

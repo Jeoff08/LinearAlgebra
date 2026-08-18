@@ -11,21 +11,19 @@ export default function Navbar() {
   const isDark = theme === "dark";
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `relative px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
+    `relative px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
       isActive
         ? isDark
-          ? "text-[#B6FF2E] bg-[#1F2329] border border-[#B6FF2E]/50 shadow-sm shadow-[#B6FF2E]/20"
-          : "text-white bg-[#1F2329] border border-[#1F2329] shadow-md shadow-[#1F2329]/20 font-bold"
+          ? "text-[#B6FF2E] bg-white/10 shadow-sm"
+          : "text-[#1F2329] bg-black/10 shadow-sm"
         : isDark
-          ? "text-slate-300 hover:text-[#B6FF2E] hover:bg-[#1F2329]/80 border border-transparent"
-          : "text-slate-700 hover:text-black hover:bg-slate-200 border border-transparent"
+          ? "text-slate-200 hover:text-[#B6FF2E] hover:bg-white/5"
+          : "text-slate-800 hover:text-black hover:bg-black/5"
     }`;
 
   return (
-    <header className={`relative z-30 mb-8 rounded-2xl border backdrop-blur-xl px-4 sm:px-6 py-3.5 transition-all duration-300 ${
-      isDark
-        ? "border-[#333A46] bg-[#1F2329]/90 shadow-2xl shadow-black/70 hover:border-[#B6FF2E]/40 text-white"
-        : "border-slate-200 bg-white/95 shadow-lg shadow-slate-200/60 hover:border-slate-300 text-[#1F2329]"
+    <header className={`relative z-30 mb-6 py-2 transition-colors duration-300 ${
+      isDark ? "text-white" : "text-[#1F2329]"
     }`}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         {/* Brand Logo & Title */}
@@ -51,8 +49,8 @@ export default function Navbar() {
               }`}>
                 Linear Algebra Lab
               </span>
-              <span className={`rounded-full px-1.5 py-0.2 text-[0.6rem] font-bold border ${
-                isDark ? "bg-[#14171B] text-[#B6FF2E] border-[#B6FF2E]/30" : "bg-[#1F2329] text-[#B6FF2E] border-[#1F2329]"
+              <span className={`rounded-full px-2 py-0.5 text-[0.6rem] font-bold ${
+                isDark ? "bg-[#14171B] text-[#B6FF2E]" : "bg-[#1F2329] text-[#B6FF2E]"
               }`}>
                 v2.0
               </span>
@@ -74,7 +72,7 @@ export default function Navbar() {
             style={({ isActive }) => ({
               color: isActive
                 ? (isDark ? "#B6FF2E" : "#FFFFFF")
-                : (isDark ? "#CBD5E1" : "#334155")
+                : (isDark ? "#F8FAFC" : "#0F172A")
             })}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -87,7 +85,7 @@ export default function Navbar() {
             style={({ isActive }) => ({
               color: isActive
                 ? (isDark ? "#B6FF2E" : "#FFFFFF")
-                : (isDark ? "#CBD5E1" : "#334155")
+                : (isDark ? "#F8FAFC" : "#0F172A")
             })}
           >
             <Calculator className="w-3.5 h-3.5" />
@@ -101,7 +99,7 @@ export default function Navbar() {
               style={({ isActive }) => ({
                 color: isActive
                   ? (isDark ? "#B6FF2E" : "#FFFFFF")
-                  : (isDark ? "#CBD5E1" : "#334155")
+                  : (isDark ? "#F8FAFC" : "#0F172A")
               })}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -115,10 +113,10 @@ export default function Navbar() {
             onClick={toggleTheme}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.92 }}
-            className={`relative flex h-9 w-9 items-center justify-center rounded-xl border transition-colors duration-200 ${
+            className={`relative flex h-9 w-9 items-center justify-center rounded-xl transition-colors duration-200 ${
               isDark
-                ? "border-[#333A46] bg-[#14171B] text-[#B6FF2E] shadow-md shadow-black/50 hover:bg-[#1F2329] hover:border-[#B6FF2E]/50 hover:shadow-[#B6FF2E]/20"
-                : "border-slate-200 bg-slate-100 text-[#1F2329] shadow-sm shadow-slate-200 hover:bg-slate-200 hover:border-slate-300"
+                ? "bg-white/10 text-[#B6FF2E] hover:bg-white/20"
+                : "bg-black/10 text-[#1F2329] hover:bg-black/15"
             }`}
             title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             aria-label="Toggle theme"
@@ -141,17 +139,17 @@ export default function Navbar() {
             </div>
           </motion.button>
 
-          <div className={`h-5 w-px mx-1 hidden sm:block ${isDark ? "bg-[#333A46]" : "bg-slate-300"}`} />
+          <div className={`h-5 w-px mx-1 hidden sm:block ${isDark ? "bg-[#333A46]/60" : "bg-slate-300/60"}`} />
 
           {!isAuthenticated ? (
             <div className="flex items-center gap-2">
               <NavLink
                 to="/login"
-                className={`px-3.5 py-1.5 text-xs sm:text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 ${
-                  isDark ? "text-slate-300 hover:text-[#B6FF2E]" : "text-slate-700 hover:text-[#1F2329]"
+                className={`px-3.5 py-1.5 text-xs sm:text-sm font-bold transition-colors duration-200 flex items-center gap-1.5 rounded-xl ${
+                  isDark ? "text-slate-100 hover:text-[#B6FF2E] hover:bg-[#14171B]/60" : "text-slate-900 hover:text-black hover:bg-slate-100"
                 }`}
                 style={{
-                  color: isDark ? "#CBD5E1" : "#334155"
+                  color: isDark ? "#F8FAFC" : "#0F172A"
                 }}
               >
                 <LogIn className="w-3.5 h-3.5" />
@@ -182,7 +180,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => void logout()}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-rose-500/30 bg-rose-950/20 px-3 py-1.5 text-xs sm:text-sm font-semibold text-rose-400 transition-all duration-200 hover:bg-rose-900/30 hover:border-rose-400/50 hover:text-rose-300"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-rose-950/20 px-3 py-1.5 text-xs sm:text-sm font-semibold text-rose-400 transition-all duration-200 hover:bg-rose-900/30 hover:text-rose-300"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>Logout</span>

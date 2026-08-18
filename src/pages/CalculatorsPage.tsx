@@ -192,7 +192,7 @@ export default function CalculatorsPage() {
             }`}>
               <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />
             </div>
-            <span className="font-bold tracking-tight">Back to Dashboard</span>
+            <span className="font-bold tracking-tight">Back to Home</span>
             <span className={`hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-md font-mono ${
               isDark ? "bg-[#14171B] text-slate-400 border border-[#333A46]" : "bg-slate-100 text-slate-500 border border-slate-200"
             }`}>

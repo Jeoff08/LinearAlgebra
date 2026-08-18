@@ -1,5 +1,5 @@
 // components/MatrixInverse.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PDFExport from './PDFExport';
 
 const MatrixInverse: React.FC = () => {
@@ -11,6 +11,33 @@ const MatrixInverse: React.FC = () => {
   const [steps, setSteps] = useState<{ step: string; explanation: string }[]>([]);
   const [error, setError] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
+  const [tryFlash, setTryFlash] = useState(false);
+  const solveRef = useRef<(() => void) | null>(null);
+
+  // Listen for "Try in Calculator" events dispatched from topic sections
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.matrix && Array.isArray(detail.matrix) && detail.matrix.length >= 2) {
+        const mat: number[][] = detail.matrix;
+        setMatrix(mat);
+        setResult('');
+        setSteps([]);
+        setError('');
+        setTryFlash(true);
+        setTimeout(() => setTryFlash(false), 1500);
+        // Auto-solve after state update
+        setTimeout(() => solveRef.current?.(), 100);
+      }
+    };
+    document.addEventListener('try-in-calculator', handler);
+    return () => document.removeEventListener('try-in-calculator', handler);
+  }, []);
+
+  // Keep solve function in ref so the event handler always calls the latest version
+  useEffect(() => {
+    solveRef.current = calculateInverse;
+  });
 
   // Get the determinant of a matrix
   const getDeterminant = (matrix: number[][]): number => {

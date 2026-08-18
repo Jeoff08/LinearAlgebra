@@ -1,5 +1,5 @@
 // components/EigenCalculator.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PDFExport from './PDFExport';
 
 const EigenCalculator: React.FC = () => {
@@ -11,6 +11,27 @@ const EigenCalculator: React.FC = () => {
   const [steps, setSteps] = useState<{ step: string; explanation: string }[]>([]);
   const [error, setError] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
+  const solveRef = useRef<(() => void) | null>(null);
+
+  // Listen for "Try in Calculator" events dispatched from topic sections
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.matrix && Array.isArray(detail.matrix) && detail.matrix.length >= 2) {
+        setMatrix(detail.matrix);
+        setResult('');
+        setSteps([]);
+        setError('');
+        setTimeout(() => solveRef.current?.(), 100);
+      }
+    };
+    document.addEventListener('try-in-calculator', handler);
+    return () => document.removeEventListener('try-in-calculator', handler);
+  }, []);
+
+  useEffect(() => {
+    solveRef.current = calculateEigen;
+  });
 
   // Format matrix for display
   const formatMatrix = (matrix: number[][]): string => {
