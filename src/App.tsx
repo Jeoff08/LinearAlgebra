@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import mathBg from "./assets/math.jpeg";
 import TopicPage from "./pages/TopicPage";
 // import TopicsPage from "./pages/TopicsPage";
 import LoginPage from "./pages/LoginPage";
@@ -19,7 +20,14 @@ export default function App() {
       <AuthProvider>
         <HashRouter>
           <div className="app-shell">
-            <div className="ambient" aria-hidden />
+            <div className="ambient" aria-hidden>
+              <img
+                src={mathBg}
+                alt="Mathematics Background"
+                className="ambient-bg-img"
+              />
+              <div className="ambient-overlay" />
+            </div>
             <Navbar />
             <main>
             <Routes>

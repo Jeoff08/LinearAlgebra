@@ -98,16 +98,17 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  transition: background-color 200ms ease, color 200ms ease;
+  background: transparent !important;
+  transition: color 200ms ease;
 }
 
 html.dark body {
-  background: #14171B;
+  background: transparent !important;
   color: #FFFFFF;
 }
 
 html.light body {
-  background: #F8FAFC;
+  background: transparent !important;
   color: #1F2329;
 }
 
@@ -121,13 +122,13 @@ button,
 input,
 textarea,
 select,
-.ambient,
 .calculator-wrapper-theme {
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
 #root {
   min-height: 100vh;
+  background: transparent;
 }
 
 .app-shell {
@@ -135,48 +136,55 @@ select,
   min-height: 100vh;
   padding: 1.5rem clamp(1rem, 3vw, 2.5rem) 3rem;
   overflow: hidden;
+  z-index: 1;
 }
 
 .ambient {
   position: fixed;
   inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+html.dark .ambient-bg-img, :root[data-theme="dark"] .ambient-bg-img {
+  opacity: 0.85;
+  filter: contrast(125%) brightness(85%) saturate(110%);
+}
+
+html.light .ambient-bg-img, :root[data-theme="light"] .ambient-bg-img {
+  opacity: 0.65;
+  filter: contrast(110%) brightness(105%) saturate(105%);
+}
+
+.ambient-overlay {
+  position: absolute;
+  inset: 0;
   transition: background 0.5s ease;
-  z-index: -1;
 }
 
-html.dark .ambient, :root[data-theme="dark"] .ambient {
+html.dark .ambient-overlay, :root[data-theme="dark"] .ambient-overlay {
   background:
-    radial-gradient(
-      ellipse 80% 60% at 20% -10%,
-      rgba(182, 255, 46, 0.12),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 50% at 85% 20%,
-      rgba(182, 255, 46, 0.08),
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 70% 60% at 50% 100%,
-      rgba(31, 35, 41, 0.6),
-      transparent 60%
-    ),
-    linear-gradient(175deg, #1F2329 0%, #14171B 50%, #0F1215 100%);
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(39, 59, 181, 0.35), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(27, 43, 140, 0.3), transparent 55%),
+    linear-gradient(175deg, rgba(11, 16, 43, 0.75) 0%, rgba(14, 20, 56, 0.70) 50%, rgba(7, 11, 31, 0.82) 100%);
 }
 
-html.light .ambient, :root[data-theme="light"] .ambient {
+html.light .ambient-overlay, :root[data-theme="light"] .ambient-overlay {
   background:
-    radial-gradient(
-      ellipse 70% 50% at 15% -5%,
-      rgba(182, 255, 46, 0.18),
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 60% 50% at 90% 15%,
-      rgba(31, 35, 41, 0.05),
-      transparent 50%
-    ),
-    linear-gradient(165deg, #F8FAFC 0%, #FFFFFF 45%, #F1F5F9 100%);
+    radial-gradient(ellipse 70% 50% at 15% -5%, rgba(59, 130, 246, 0.15), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 15%, rgba(99, 102, 241, 0.12), transparent 50%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.75) 0%, rgba(248, 250, 252, 0.65) 45%, rgba(238, 242, 255, 0.75) 100%);
 }
 
 .topbar {
@@ -664,14 +672,9 @@ html.dark .bg-amber-50 {
   color: #FFFFFF !important;
 }
 
-/* Gradient Header Banners in Dark Mode (Eliminate white background box) */
-html.dark [class*="bg-gradient-to-"],
-html.dark .bg-gradient-to-r,
-html.dark .bg-gradient-to-l,
-html.dark .bg-gradient-to-t,
-html.dark .bg-gradient-to-b,
-.theme-dark [class*="bg-gradient-to-"],
-.theme-dark .bg-gradient-to-r {
+/* Solution step banners in calculator components only (scoped to prevent interfering with hero & page gradients) */
+.calc-container .theme-dark [class*="bg-gradient-to-"],
+.calculator-wrapper-theme.theme-dark [class*="bg-gradient-to-"] {
   background-image: none !important;
   background-color: #1F2329 !important;
   border-color: #333A46 !important;
