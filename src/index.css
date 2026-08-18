@@ -1,18 +1,38 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-graphite: #1F2329;
+  --color-graphite-dark: #14171B;
+  --color-graphite-surface: #242930;
+  --color-graphite-card: #282E37;
+  --color-graphite-border: #333A46;
+  --color-lime-compute: #B6FF2E;
+  --color-lime-compute-hover: #C6FF4D;
+  --color-lime-compute-dark: #8EC91A;
+  --color-lime-compute-dim: rgba(182, 255, 46, 0.15);
+}
+
 :root {
-  --ink: #14201b;
-  --paper: #e8efe6;
-  --moss: #1f6f4a;
-  --moss-deep: #0f3d2a;
-  --lime: #b7e27c;
-  --sand: #d7c4a3;
-  --danger: #b42318;
-  --muted: #5b6b63;
-  --panel: rgba(255, 255, 255, 0.55);
-  --line: rgba(20, 32, 27, 0.12);
-  --shadow: 0 24px 60px rgba(15, 61, 42, 0.12);
+  --ink: #FFFFFF;
+  --paper: #14171B;
+  --graphite: #1F2329;
+  --graphite-dark: #14171B;
+  --graphite-surface: #242930;
+  --graphite-border: #333A46;
+  --lime-compute: #B6FF2E;
+  --moss: #B6FF2E;
+  --moss-deep: #A0E820;
+  --lime: #B6FF2E;
+  --sand: #B6FF2E;
+  --heading: #FFFFFF;
+  --danger: #EF4444;
+  --muted: #9CA3AF;
+  --panel: rgba(31, 35, 41, 0.88);
+  --line: rgba(182, 255, 46, 0.25);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   font-family: "IBM Plex Sans", sans-serif;
   color: var(--ink);
   background: var(--paper);
@@ -22,13 +42,88 @@
   -webkit-font-smoothing: antialiased;
 }
 
+html.light, :root[data-theme="light"] {
+  --ink: #1F2329;
+  --paper: #F8FAFC;
+  --graphite: #1F2329;
+  --graphite-dark: #14171B;
+  --graphite-surface: #FFFFFF;
+  --graphite-border: #CBD5E1;
+  --lime-compute: #2E5A00;
+  --moss: #2E5A00;
+  --moss-deep: #1F3D00;
+  --lime: #2E5A00;
+  --sand: #1F2329;
+  --heading: #1F2329;
+  --danger: #DC2626;
+  --muted: #334155;
+  --panel: rgba(255, 255, 255, 0.96);
+  --line: rgba(31, 35, 41, 0.15);
+  --shadow: 0 20px 40px rgba(31, 35, 41, 0.08);
+}
+
+html.dark, :root[data-theme="dark"] {
+  --ink: #FFFFFF;
+  --paper: #14171B;
+  --graphite: #1F2329;
+  --graphite-dark: #14171B;
+  --graphite-surface: #242930;
+  --graphite-border: #333A46;
+  --lime-compute: #B6FF2E;
+  --moss: #B6FF2E;
+  --moss-deep: #A0E820;
+  --lime: #B6FF2E;
+  --sand: #B6FF2E;
+  --heading: #FFFFFF;
+  --danger: #EF4444;
+  --muted: #9CA3AF;
+  --panel: rgba(31, 35, 41, 0.88);
+  --line: rgba(182, 255, 46, 0.25);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: #B6FF2E;
+  color: #1F2329;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+html.dark body {
+  background: #14171B;
+  color: #FFFFFF;
+}
+
+html.light body {
+  background: #F8FAFC;
+  color: #1F2329;
+}
+
+/* Fast, smooth theme transitions on theme-affecting surfaces without layout lag */
+header,
+nav,
+main,
+section,
+article,
+button,
+input,
+textarea,
+select,
+.ambient,
+.calculator-wrapper-theme {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
 }
 
 #root {
@@ -38,26 +133,50 @@ body {
 .app-shell {
   position: relative;
   min-height: 100vh;
-  padding: 2rem clamp(1.25rem, 4vw, 3rem) 3rem;
+  padding: 1.5rem clamp(1rem, 3vw, 2.5rem) 3rem;
   overflow: hidden;
 }
 
 .ambient {
   position: fixed;
   inset: 0;
+  transition: background 0.5s ease;
+  z-index: -1;
+}
+
+html.dark .ambient, :root[data-theme="dark"] .ambient {
   background:
     radial-gradient(
-      ellipse 70% 50% at 10% -10%,
-      rgba(183, 226, 124, 0.45),
+      ellipse 80% 60% at 20% -10%,
+      rgba(182, 255, 46, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 20%,
+      rgba(182, 255, 46, 0.08),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 50% 100%,
+      rgba(31, 35, 41, 0.6),
+      transparent 60%
+    ),
+    linear-gradient(175deg, #1F2329 0%, #14171B 50%, #0F1215 100%);
+}
+
+html.light .ambient, :root[data-theme="light"] .ambient {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 15% -5%,
+      rgba(182, 255, 46, 0.18),
       transparent 55%
     ),
     radial-gradient(
-      ellipse 50% 40% at 95% 15%,
-      rgba(215, 196, 163, 0.35),
+      ellipse 60% 50% at 90% 15%,
+      rgba(31, 35, 41, 0.05),
       transparent 50%
     ),
-    linear-gradient(165deg, #edf3ea 0%, #dfe9db 45%, #cfdcc9 100%);
-  z-index: -1;
+    linear-gradient(165deg, #F8FAFC 0%, #FFFFFF 45%, #F1F5F9 100%);
 }
 
 .topbar {
@@ -186,8 +305,8 @@ body {
 }
 
 .field:focus {
-  border-color: var(--moss);
-  box-shadow: 0 0 0 3px rgba(31, 111, 74, 0.12);
+  border-color: #B6FF2E;
+  box-shadow: 0 0 0 3px rgba(182, 255, 46, 0.2);
 }
 
 .area {
@@ -257,13 +376,16 @@ body {
 }
 
 .badge.synced {
-  color: var(--moss-deep);
-  background: rgba(183, 226, 124, 0.35);
+  color: #1F2329;
+  background: #B6FF2E;
+  font-weight: 700;
+  border-color: #B6FF2E;
 }
 
 .badge.local {
-  color: #7a4a12;
-  background: rgba(215, 196, 163, 0.45);
+  color: #F8FAFC;
+  background: #282E37;
+  border-color: #333A46;
 }
 
 .btn {
@@ -273,9 +395,11 @@ body {
   font-size: 0.88rem;
   padding: 0.55rem 0.95rem;
   cursor: pointer;
+  border-radius: 0.75rem;
   transition:
     transform 0.15s ease,
     background 0.15s ease,
+    box-shadow 0.15s ease,
     opacity 0.15s ease;
 }
 
@@ -289,12 +413,27 @@ body {
 }
 
 .btn.primary {
-  background: var(--moss);
-  color: #f4faf2;
+  background: #B6FF2E;
+  color: #1F2329;
+  font-weight: 700;
+  border-color: rgba(182, 255, 46, 0.5);
+  box-shadow: 0 4px 14px rgba(182, 255, 46, 0.25);
 }
 
 .btn.primary:hover:not(:disabled) {
-  background: var(--moss-deep);
+  background: #C6FF4D;
+  box-shadow: 0 6px 20px rgba(182, 255, 46, 0.4);
+}
+
+.btn.secondary {
+  background: #1F2329;
+  color: #B6FF2E;
+  border-color: rgba(182, 255, 46, 0.4);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #282E37;
+  border-color: #B6FF2E;
 }
 
 .btn.ghost {
@@ -305,7 +444,7 @@ body {
 
 .btn.danger {
   background: transparent;
-  border-color: rgba(180, 35, 24, 0.25);
+  border-color: rgba(239, 68, 68, 0.3);
   color: var(--danger);
 }
 
@@ -317,20 +456,33 @@ body {
   max-width: min(90vw, 32rem);
   margin: 0;
   padding: 0.75rem 1rem;
-  background: #2a1614;
-  color: #f8e9e7;
+  background: #1F2329;
+  border: 1px solid #333A46;
+  color: #F8FAFC;
   font-size: 0.85rem;
+  border-radius: 0.75rem;
   box-shadow: var(--shadow);
 }
 
-a {
-  color: var(--moss-deep);
+:where(a) {
+  color: #B6FF2E;
+}
+
+:where(html.light a) {
+  color: #3A6900;
 }
 
 code {
   font-size: 0.9em;
-  background: rgba(183, 226, 124, 0.25);
+  background: rgba(182, 255, 46, 0.15);
+  color: #B6FF2E;
   padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
+}
+
+html.light code {
+  color: #1F2329;
+  background: rgba(182, 255, 46, 0.25);
 }
 
 .no-underline {
@@ -356,12 +508,17 @@ code {
   align-items: stretch;
 }
 .book-page {
-  background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
-  border: 1px solid rgba(20, 32, 27, 0.09);
-  box-shadow: 0 12px 40px rgba(12, 30, 20, 0.12);
+  background: linear-gradient(180deg, #1F2329 0%, #14171B 100%);
+  border: 1px solid rgba(182, 255, 46, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   position: relative;
-  border-radius: 2px;
+  border-radius: 6px;
+}
+html.light .book-page {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 1px solid rgba(31, 35, 41, 0.1);
+  box-shadow: 0 12px 40px rgba(31, 35, 41, 0.08);
 }
 .book-page-left {
   padding: 1rem;
@@ -386,22 +543,22 @@ code {
   top: 0;
   width: calc(50% + 9px);
   height: 100%;
-  background: linear-gradient(180deg, #f4b900 0%, #f0a800 100%);
-  border-left: 1px solid rgba(20, 32, 27, 0.08);
-  box-shadow: 0 18px 50px rgba(12, 30, 20, 0.2);
+  background: linear-gradient(180deg, #1F2329 0%, #14171B 100%);
+  border: 1px solid rgba(182, 255, 46, 0.3);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
   transform-origin: left center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #15345d;
+  color: #B6FF2E;
   font-family: "Fraunces", serif;
   font-weight: 700;
   font-size: 1.4rem;
   padding: 1rem;
   box-sizing: border-box;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 .book-cover::after {
   content: "";
@@ -410,7 +567,7 @@ code {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(182, 255, 46, 0.2);
 }
 .book-spine-shadow {
   position: absolute;
@@ -418,7 +575,7 @@ code {
   top: 0;
   height: 100%;
   width: 12px;
-  box-shadow: inset -30px 0 40px rgba(0, 0, 0, 0.08);
+  box-shadow: inset -30px 0 40px rgba(0, 0, 0, 0.3);
   pointer-events: none;
 }
 
@@ -433,8 +590,6 @@ code {
     transform-origin: left center;
   }
 }
-
-/* Add to your global CSS file */
 
 /* Gradient animation for title */
 @keyframes gradient-x {
@@ -459,29 +614,288 @@ code {
   will-change: transform, opacity, box-shadow;
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
+/* Custom scrollbar - Deep Graphite & Lime Compute */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: #14171B;
   border-radius: 10px;
 }
 
+html.light ::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  background: linear-gradient(180deg, #B6FF2E, #8EC91A);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #4f46e5, #7c3aed);
+  background: linear-gradient(180deg, #C6FF4D, #B6FF2E);
+}
+
+/* Global Calculator Theme & Step-by-Step overrides to Deep Graphite & Lime Compute */
+.theme-dark .bg-blue-50,
+.theme-dark .bg-indigo-50,
+.theme-dark .bg-sky-50,
+.theme-dark .bg-cyan-50,
+.theme-dark .bg-slate-50,
+.theme-dark .bg-slate-100,
+.theme-dark .bg-green-50,
+.theme-dark .bg-emerald-50,
+.theme-dark .bg-purple-50,
+.theme-dark .bg-amber-50,
+html.dark .bg-blue-50,
+html.dark .bg-indigo-50,
+html.dark .bg-sky-50,
+html.dark .bg-cyan-50,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-green-50,
+html.dark .bg-emerald-50,
+html.dark .bg-purple-50,
+html.dark .bg-amber-50 {
+  background-color: #1F2329 !important;
+  border-color: #333A46 !important;
+  color: #FFFFFF !important;
+}
+
+/* Gradient Header Banners in Dark Mode (Eliminate white background box) */
+html.dark [class*="bg-gradient-to-"],
+html.dark .bg-gradient-to-r,
+html.dark .bg-gradient-to-l,
+html.dark .bg-gradient-to-t,
+html.dark .bg-gradient-to-b,
+.theme-dark [class*="bg-gradient-to-"],
+.theme-dark .bg-gradient-to-r {
+  background-image: none !important;
+  background-color: #1F2329 !important;
+  border-color: #333A46 !important;
+  color: #FFFFFF !important;
+}
+
+/* Solution pills & badges in dark mode */
+html.dark .bg-green-100,
+html.dark .bg-green-200,
+html.dark .bg-emerald-100,
+html.dark .bg-emerald-200,
+html.dark .bg-blue-100,
+html.dark .bg-blue-200,
+html.dark .bg-indigo-100,
+html.dark .bg-indigo-200,
+.theme-dark .bg-green-100,
+.theme-dark .bg-green-200,
+.theme-dark .bg-emerald-100,
+.theme-dark .bg-emerald-200 {
+  background-color: #14171B !important;
+  color: #B6FF2E !important;
+  border: 1px solid rgba(182, 255, 46, 0.4) !important;
+  font-weight: 700 !important;
+}
+
+.theme-dark .border-blue-100,
+.theme-dark .border-blue-200,
+.theme-dark .border-indigo-100,
+.theme-dark .border-indigo-200,
+.theme-dark .border-slate-100,
+.theme-dark .border-slate-200,
+.theme-dark .border-slate-300,
+.theme-dark .border-green-100,
+.theme-dark .border-green-200,
+html.dark .border-blue-100,
+html.dark .border-blue-200,
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .border-green-100,
+html.dark .border-green-200 {
+  border-color: #333A46 !important;
+}
+
+/* Change all dark blue / indigo / slate solution step text to pure WHITE in dark mode */
+.theme-dark .text-blue-800,
+.theme-dark .text-blue-900,
+.theme-dark .text-indigo-800,
+.theme-dark .text-indigo-900,
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-800,
+.theme-dark .text-slate-900,
+.theme-dark .text-green-800,
+.theme-dark .text-green-900,
+html.dark .text-blue-800,
+html.dark .text-blue-900,
+html.dark .text-indigo-800,
+html.dark .text-indigo-900,
+html.dark .text-slate-700,
+html.dark .text-slate-800,
+html.dark .text-slate-900,
+html.dark .text-green-800,
+html.dark .text-green-900,
+html.dark [class*="text-blue-900"],
+html.dark [class*="text-indigo-900"],
+html.dark [class*="text-blue-800"],
+html.dark [class*="text-indigo-800"],
+html.dark .font-mono.whitespace-pre-wrap,
+html.dark .font-mono {
+  color: #FFFFFF !important;
+}
+
+.theme-dark .text-blue-600,
+.theme-dark .text-blue-700,
+.theme-dark .text-indigo-600,
+.theme-dark .text-cyan-600,
+.theme-dark .text-green-600,
+.theme-dark .text-green-700,
+html.dark .text-blue-600,
+html.dark .text-blue-700,
+html.dark .text-indigo-600,
+html.dark .text-cyan-600,
+html.dark .text-green-600,
+html.dark .text-green-700,
+html.dark [class*="text-blue-600"],
+html.dark [class*="text-indigo-600"] {
+  color: #B6FF2E !important;
+}
+
+.theme-dark .text-slate-500,
+.theme-dark .text-slate-600,
+html.dark .text-slate-500,
+html.dark .text-slate-600 {
+  color: #9CA3AF !important;
+}
+
+.theme-dark .hover\:bg-blue-100:hover,
+.theme-dark .hover\:bg-slate-50:hover,
+.theme-dark .hover\:bg-slate-100:hover,
+html.dark .hover\:bg-blue-100:hover,
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-100:hover {
+  background-color: #282E37 !important;
+}
+
+/* Dark mode inputs, tables, cards, and selects across calculators */
+html.dark .bg-white,
+.theme-dark .bg-white {
+  background-color: #14171B !important;
+  color: #FFFFFF !important;
+  border-color: #333A46 !important;
+}
+
+html.dark select,
+html.dark input[type="text"],
+html.dark input[type="number"],
+html.dark input:not([type="checkbox"]):not([type="radio"]) {
+  background-color: #14171B !important;
+  color: #FFFFFF !important;
+  border-color: #333A46 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder,
+.theme-dark input::placeholder {
+  color: #6B7280 !important;
+}
+
+html.dark table,
+html.dark table td,
+html.dark table th,
+.theme-dark table,
+.theme-dark table td,
+.theme-dark table th {
+  border-color: #333A46 !important;
+}
+
+html.dark table td input,
+.theme-dark table td input {
+  background-color: #14171B !important;
+  color: #FFFFFF !important;
+}
+
+html.dark select:focus,
+html.dark input[type="text"]:focus,
+html.dark input[type="number"]:focus,
+html.dark input:focus {
+  border-color: #B6FF2E !important;
+  box-shadow: 0 0 0 2px rgba(182, 255, 46, 0.25) !important;
+}
+
+/* Light mode calculator steps, gradients, inputs and placeholders */
+html.light [class*="bg-gradient-to-"],
+html.light .bg-gradient-to-r {
+  background-image: linear-gradient(to right, #F8FAFC, #F1F5F9) !important;
+  border-color: #E2E8F0 !important;
+  color: #1F2329 !important;
+}
+
+html.light select,
+html.light input[type="text"],
+html.light input[type="number"],
+html.light input:not([type="checkbox"]):not([type="radio"]) {
+  background-color: #FFFFFF !important;
+  color: #1F2329 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+html.light select:focus,
+html.light input[type="text"]:focus,
+html.light input[type="number"]:focus,
+html.light input:focus {
+  border-color: #2E5A00 !important;
+  box-shadow: 0 0 0 2px rgba(46, 90, 0, 0.2) !important;
+}
+
+html.light .bg-blue-50,
+html.light .bg-indigo-50,
+html.light .bg-slate-50 {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+}
+
+html.light .border-blue-100,
+html.light .border-blue-200,
+html.light .border-slate-200 {
+  border-color: #E2E8F0 !important;
+}
+
+html.light .text-blue-800,
+html.light .text-blue-900,
+html.light .text-slate-800,
+html.light .text-slate-900 {
+  color: #1F2329 !important;
+}
+
+html.light .text-blue-600,
+html.light .text-blue-700 {
+  color: #4D8500 !important;
+}
+
+/* Primary calculator calculation buttons */
+.theme-dark button.bg-indigo-600,
+.theme-dark button.bg-blue-600,
+.theme-dark button.bg-cyan-600,
+html.dark button.bg-indigo-600,
+html.dark button.bg-blue-600 {
+  background-color: #B6FF2E !important;
+  color: #1F2329 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(182, 255, 46, 0.3) !important;
+}
+
+.theme-dark button.bg-indigo-600:hover,
+.theme-dark button.bg-blue-600:hover,
+html.dark button.bg-indigo-600:hover,
+html.dark button.bg-blue-600:hover {
+  background-color: #C6FF4D !important;
+  box-shadow: 0 6px 20px rgba(182, 255, 46, 0.45) !important;
 }
 
 

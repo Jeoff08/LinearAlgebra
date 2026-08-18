@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import TopicPage from "./pages/TopicPage";
 // import TopicsPage from "./pages/TopicsPage";
 import LoginPage from "./pages/LoginPage";
@@ -10,17 +11,17 @@ import PublicPage from "./pages/PublicPage";
 import RegisterPage from "./pages/RegisterPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import CalculatorApp from "./calculators/CalculatorApp";
-// Make sure the file exists at this path
 import CalculatorsPage from "./pages/CalculatorsPage";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <HashRouter>
-        <div className="app-shell">
-          <div className="ambient" aria-hidden />
-          <Navbar />
-          <main>
+    <ThemeProvider>
+      <AuthProvider>
+        <HashRouter>
+          <div className="app-shell">
+            <div className="ambient" aria-hidden />
+            <Navbar />
+            <main>
             <Routes>
               <Route path="/" element={<PublicPage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -43,5 +44,6 @@ export default function App() {
         </div>
       </HashRouter>
     </AuthProvider>
+    </ThemeProvider>
   );
 }

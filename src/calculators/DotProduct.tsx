@@ -1,5 +1,6 @@
 // components/DotProduct.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'dot' | 'cross' | 'angle' | 'projection' | 'norm';
 
@@ -800,6 +801,15 @@ const DotProduct: React.FC = () => {
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                 {result}
               </pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Vector Operations - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vector A = (${vectorA.join(', ')})\nVector B = (${vectorB.join(', ')})\nOperation = ${operation}`}
+                fileName={`dotproduct_${operation}`}
+              />
             </div>
           </div>
         </div>

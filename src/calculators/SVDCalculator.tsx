@@ -1,5 +1,6 @@
 // components/SVDCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 interface Step {
   title: string;
@@ -546,6 +547,18 @@ const SVDCalculator: React.FC = () => {
                     </span>
                   </div>
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="Singular Value Decomposition (A = UΣVᵀ)"
+                  data={`Matrix Size: ${matrix.length}×${matrix[0]?.length || 0}\nRank / Non-zero SVs: ${Math.min(matrix.length, matrix[0]?.length || 0)}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || 0}):\n${matrix.map(r => `[${r.join(', ')}]`).join('\n')}`}
+                  fileName="svd_decomposition"
+                />
               </div>
             </div>
           </div>

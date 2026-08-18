@@ -1,5 +1,6 @@
 // components/EigenCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 const EigenCalculator: React.FC = () => {
   const [matrix, setMatrix] = useState<number[][]>([
@@ -829,6 +830,15 @@ const EigenCalculator: React.FC = () => {
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                 {result}
               </pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Eigenvalues & Eigenvectors (${matrix.length}×${matrix[0]?.length || matrix.length})`}
+                data={result}
+                steps={steps}
+                inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || matrix.length}):\n${formatMatrix(matrix)}`}
+                fileName={`eigenvalues_${matrix.length}x${matrix[0]?.length || matrix.length}`}
+              />
             </div>
           </div>
         </div>

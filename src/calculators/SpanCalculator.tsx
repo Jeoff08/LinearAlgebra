@@ -1,5 +1,6 @@
 // components/SpanCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'span' | 'basis' | 'dimension' | 'independence';
 
@@ -1008,6 +1009,15 @@ const SpanCalculator: React.FC = () => {
               }`}>
                 {result}
               </p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Vector Span & Subspace - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vectors:\n${vectors.map((v, i) => `v${i+1} = (${v.join(', ')})`).join('\n')}\nOperation: ${operation}`}
+                fileName={`span_${operation}_result`}
+              />
             </div>
           </div>
         </div>

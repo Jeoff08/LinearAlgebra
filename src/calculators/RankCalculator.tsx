@@ -1,5 +1,6 @@
 // components/RankCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 const RankCalculator: React.FC = () => {
   const [matrix, setMatrix] = useState<number[][]>([
@@ -559,6 +560,15 @@ const RankCalculator: React.FC = () => {
             </svg>
             <div className="flex-1">
               <p className="font-medium text-green-800">✅ {result}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Matrix Rank & Nullity (${matrix.length}×${matrix[0]?.length || matrix.length})`}
+                data={result}
+                steps={steps}
+                inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || matrix.length}):\n${formatMatrix(matrix)}`}
+                fileName={`matrix_rank_${matrix.length}x${matrix[0]?.length || matrix.length}`}
+              />
             </div>
           </div>
         </div>

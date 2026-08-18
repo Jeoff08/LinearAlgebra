@@ -1,5 +1,6 @@
 // components/LinearTransformation.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 interface Step {
   title: string;
@@ -491,6 +492,18 @@ const LinearTransformation: React.FC = () => {
                     <span className="font-mono text-sm">R^{matrix[0]?.length || 0} → R^{matrix.length}</span>
                   </div>
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="Linear Transformation (T(v) = Av)"
+                  data={`Result Vector T(v) = [${resultVector.map(v => v.toFixed(4)).join(', ')}]\nMapping: R^${matrix[0]?.length || 0} → R^${matrix.length}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}${s.vector ? '\n[' + s.vector.map(v => v.toFixed(4)).join(', ') + ']' : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Transformation Matrix T (${matrix.length}×${matrix[0]?.length || 0}):\n${matrix.map(r => `[${r.join(', ')}]`).join('\n')}\nInput Vector v = [${vector.join(', ')}]`}
+                  fileName="linear_transformation"
+                />
               </div>
             </div>
           </div>

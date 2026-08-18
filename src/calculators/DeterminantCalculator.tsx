@@ -1,5 +1,6 @@
 // components/DeterminantCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 const DeterminantCalculator: React.FC = () => {
   const [size, setSize] = useState<2 | 3 | 4>(2);
@@ -496,6 +497,15 @@ const DeterminantCalculator: React.FC = () => {
               }`}>
                 {result}
               </p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Determinant of Matrix (${size}×${size})`}
+                data={result}
+                steps={steps}
+                inputs={`Matrix A (${size}×${size}):\n${matrix.map(row => `[${row.join(', ')}]`).join('\n')}`}
+                fileName={`determinant_${size}x${size}`}
+              />
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 // components/LinearIndependence.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'independence' | 'basis' | 'dimension' | 'span';
 
@@ -997,6 +998,15 @@ const LinearIndependence: React.FC = () => {
               }`}>
                 {result}
               </p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Linear Independence - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vectors:\n${vectors.map((v, i) => `v${i+1} = (${v.join(', ')})`).join('\n')}\nOperation: ${operation}`}
+                fileName={`linear_independence_${operation}`}
+              />
             </div>
           </div>
         </div>

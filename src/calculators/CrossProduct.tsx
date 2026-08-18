@@ -1,5 +1,6 @@
 // components/CrossProduct.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'cross' | 'dot' | 'angle' | 'projection' | 'norm';
 
@@ -664,6 +665,15 @@ const CrossProduct: React.FC = () => {
             <div className="flex-1">
               <p className="font-medium text-green-800">✅ Result:</p>
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">{result}</pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`3D Vector Operations - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vector A = (${vectorA.join(', ')})\nVector B = (${vectorB.join(', ')})\nOperation = ${operation}`}
+                fileName={`crossproduct_${operation}`}
+              />
             </div>
           </div>
         </div>

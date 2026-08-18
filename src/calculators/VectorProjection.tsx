@@ -1,5 +1,6 @@
 // components/VectorProjection.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'projection' | 'dot' | 'cross' | 'angle' | 'norm' | 'orthogonal';
 
@@ -1010,6 +1011,15 @@ const VectorProjection: React.FC = () => {
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                 {result}
               </pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Vector Projection & Orthogonality - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vector A = (${vectorA.join(', ')})\nVector B = (${vectorB.join(', ')})\nOperation: ${operation}`}
+                fileName={`vector_projection_${operation}`}
+              />
             </div>
           </div>
         </div>

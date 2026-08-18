@@ -1,5 +1,6 @@
 // components/QRDecomposition.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 interface Step {
   title: string;
@@ -354,6 +355,18 @@ const QRDecomposition: React.FC = () => {
                     <span className="font-mono text-sm">{matrix[0]?.length || 0}×{matrix[0]?.length || 0}</span>
                   </div>
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="QR Decomposition (A = QR)"
+                  data={`Matrix Size: ${matrix.length}×${matrix[0]?.length || 0}\nQ Size: ${matrix.length}×${matrix[0]?.length || 0}\nR Size: ${matrix[0]?.length || 0}×${matrix[0]?.length || 0}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || 0}):\n${matrix.map(r => `[${r.join(', ')}]`).join('\n')}`}
+                  fileName="qr_decomposition"
+                />
               </div>
             </div>
           </div>

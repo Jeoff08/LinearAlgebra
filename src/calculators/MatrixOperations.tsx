@@ -1,5 +1,6 @@
 // components/MatrixOperations.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type OperationType = 'add' | 'subtract' | 'multiply' | 'scalar' | 'determinant' | 'transpose' | 'inverse' | 'trace' | 'power';
 
@@ -721,6 +722,15 @@ const MatrixOperations: React.FC = () => {
                 <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                   {result.data}
                 </pre>
+              </div>
+              <div className="flex-shrink-0">
+                <PDFExport
+                  title={`Matrix Operations - ${operation.toUpperCase()}`}
+                  data={result.data}
+                  steps={result.steps}
+                  inputs={`Matrix A (${matrixA.length}×${matrixA[0]?.length || matrixA.length}):\n${formatMatrix(matrixA)}${['add', 'subtract', 'multiply'].includes(operation) ? `\nMatrix B (${matrixB.length}×${matrixB[0]?.length || matrixB.length}):\n${formatMatrix(matrixB)}` : ''}${operation === 'scalar' ? `\nScalar: ${scalarValue}` : ''}${operation === 'power' ? `\nPower: ${powerValue}` : ''}\nOperation: ${operation}`}
+                  fileName={`matrix_operations_${operation}`}
+                />
               </div>
             </div>
           </div>

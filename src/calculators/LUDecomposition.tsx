@@ -1,5 +1,6 @@
 // components/LUDecomposition.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'lu' | 'solve' | 'determinant' | 'inverse';
 
@@ -969,6 +970,15 @@ const LUDecomposition: React.FC = () => {
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                 {result}
               </pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`LU Decomposition - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || matrix.length}):\n${formatMatrix(matrix)}${operation === 'solve' ? `\nb Vector = [${bVector.join(', ')}]` : ''}\nOperation: ${operation}`}
+                fileName={`lu_decomposition_${operation}`}
+              />
             </div>
           </div>
         </div>

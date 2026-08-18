@@ -1,5 +1,6 @@
 // components/VectorCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'norm' | 'dot' | 'cross' | 'add' | 'subtract' | 'scalar' | 'angle' | 'projection' | 'unit';
 
@@ -690,6 +691,15 @@ const VectorCalculator: React.FC = () => {
               <pre className="mt-2 font-mono text-sm text-green-700 whitespace-pre-wrap">
                 {result}
               </pre>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Vector Calculator - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vector 1 = (${vector1.join(', ')})${useSecondVector ? `\nVector 2 = (${vector2.join(', ')})` : ''}${operation === 'scalar' ? `\nScalar: ${scalarValue}` : ''}\nOperation: ${operation}`}
+                fileName={`vector_calc_${operation}`}
+              />
             </div>
           </div>
         </div>

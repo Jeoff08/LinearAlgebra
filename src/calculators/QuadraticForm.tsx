@@ -1,5 +1,6 @@
 // components/QuadraticForm.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 interface Step {
   title: string;
@@ -484,6 +485,18 @@ const QuadraticForm: React.FC = () => {
                     <span className="font-mono text-sm font-bold text-indigo-600">{quadraticValue.toFixed(6)}</span>
                   </div>
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="Quadratic Form (Q(x) = xᵀAx)"
+                  data={`Matrix Size: ${matrix.length}×${matrix[0]?.length || 0}\nVector Dimension: ${vector.length}\nQ(x) Value = ${quadraticValue.toFixed(6)}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}${s.vector ? '\n[' + s.vector.map(v => v.toFixed(4)).join(', ') + ']' : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || 0}):\n${matrix.map(r => `[${r.join(', ')}]`).join('\n')}\nVector x = [${vector.join(', ')}]`}
+                  fileName="quadratic_form"
+                />
               </div>
             </div>
           </div>

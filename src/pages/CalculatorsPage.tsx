@@ -4,237 +4,108 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CalculatorApp from "../calculators/CalculatorApp";
+import { useTheme } from "../context/ThemeContext";
+import mathBg from "../assets/Math bg.jpg";
 import { ArrowLeft, Sparkles, Grid, Layers, Loader2 } from "lucide-react";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CalculatorsPage() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const calculatorRef = useRef<HTMLDivElement>(null);
-  const decorRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Show loading for 2 seconds
+    // Smooth initial transition
     const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 400);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
 
+  // Keyboard shortcut (ESC) to go back
   useEffect(() => {
-    // Only run animations if not loading
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        navigate(-1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
+
+  useEffect(() => {
     if (isLoading) return;
 
-    // Create master timeline
     const masterTl = gsap.timeline({
       defaults: {
         ease: "power3.out",
       },
     });
 
-    // 1. Animate background decorative elements
-    if (decorRef.current) {
-      const decorElements = decorRef.current.querySelectorAll('.decor-blob');
-      decorElements.forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          {
-            scale: 0.6,
-            opacity: 0,
-            rotation: -20,
-          },
-          {
-            scale: 1,
-            opacity: 0.4,
-            rotation: 0,
-            duration: 1.8,
-            delay: i * 0.4,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: decorRef.current,
-              start: "top bottom",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-        // Floating animation
-        gsap.to(el, {
-          y: () => (i % 2 === 0 ? 20 : -20),
-          x: () => (i % 2 === 0 ? 15 : -15),
-          rotation: () => (i % 2 === 0 ? 8 : -8),
-          duration: 6 + i * 2,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: i * 1.5,
-        });
-      });
-    }
-
-    // 2. Animate back button
+    // 1. Animate back button
     if (backButtonRef.current) {
       masterTl.fromTo(
         backButtonRef.current,
         {
           opacity: 0,
-          scale: 0.5,
-          rotation: -10,
+          scale: 0.8,
+          x: -15,
         },
         {
           opacity: 1,
           scale: 1,
-          rotation: 0,
-          duration: 0.8,
-          ease: "back.out(2.5)",
+          x: 0,
+          duration: 0.6,
+          ease: "back.out(2)",
         }
       );
     }
 
-    // 3. Animate title
+    // 2. Animate title
     if (titleRef.current) {
-      const title = titleRef.current.querySelector('h1');
-      const description = titleRef.current.querySelector('p');
-      const badge = titleRef.current.querySelector('.badge-pill');
-      
-      if (badge) {
-        masterTl.fromTo(
-          badge,
-          {
-            opacity: 0,
-            scale: 0.8,
-            y: -10,
-          },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "back.out(2)",
-          },
-          0
-        );
-      }
-      
-      if (title) {
-        masterTl.fromTo(
-          title,
-          {
-            opacity: 0,
-            y: 50,
-            scale: 0.95,
-            filter: "blur(12px)",
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-            duration: 1.1,
-            ease: "back.out(2.2)",
-          },
-          "-=0.2"
-        );
-      }
-      
-      if (description) {
-        masterTl.fromTo(
-          description,
-          {
-            opacity: 0,
-            y: 25,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-          },
-          "-=0.7"
-        );
-      }
+      masterTl.fromTo(
+        titleRef.current,
+        {
+          opacity: 0,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
     }
 
-    // 4. Animate calculator
+    // 3. Animate calculator
     if (calculatorRef.current) {
-      const calculatorItems = calculatorRef.current.querySelectorAll(
-        '.calculator-container > *, [class*="calculator-"], .calc-section, .calc-item'
+      masterTl.fromTo(
+        calculatorRef.current,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.98,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        },
+        "-=0.4"
       );
-      
-      if (calculatorItems.length > 0) {
-        masterTl.fromTo(
-          calculatorItems,
-          {
-            opacity: 0,
-            y: 60,
-            rotationX: 12,
-            transformPerspective: 1000,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            rotationX: 0,
-            duration: 0.9,
-            stagger: {
-              amount: 0.7,
-              from: "start",
-              ease: "power2.out",
-              grid: "auto",
-            },
-            ease: "back.out(1.6)",
-          },
-          "-=0.3"
-        );
-
-        calculatorItems.forEach((item) => {
-          const el = item as HTMLElement;
-          
-          el.addEventListener('mouseenter', () => {
-            gsap.to(el, {
-              scale: 1.03,
-              y: -6,
-              boxShadow: "0 24px 48px -12px rgba(16, 185, 129, 0.25)",
-              borderColor: "rgba(16, 185, 129, 0.2)",
-              duration: 0.5,
-              ease: "power2.out",
-            });
-          });
-          
-          el.addEventListener('mouseleave', () => {
-            gsap.to(el, {
-              scale: 1,
-              y: 0,
-              boxShadow: "none",
-              borderColor: "transparent",
-              duration: 0.4,
-              ease: "power2.out",
-            });
-          });
-        });
-      } else {
-        masterTl.fromTo(
-          calculatorRef.current,
-          {
-            opacity: 0,
-            y: 70,
-            scale: 0.96,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.1,
-            ease: "back.out(1.8)",
-          },
-          "-=0.3"
-        );
-      }
     }
 
     return () => {
@@ -243,186 +114,140 @@ export default function CalculatorsPage() {
     };
   }, [isLoading]);
 
-  const handleBackClick = (e: React.MouseEvent) => {
-    const button = e.currentTarget as HTMLElement;
-    
-    // Create ripple effect
-    const ripple = document.createElement('span');
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    ripple.style.cssText = `
-      position: absolute;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x}px;
-      top: ${y}px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent 70%);
-      border-radius: 50%;
-      transform: scale(0);
-      pointer-events: none;
-    `;
-    
-    button.style.position = 'relative';
-    button.style.overflow = 'hidden';
-    button.appendChild(ripple);
-    
-    gsap.to(ripple, {
-      scale: 1.5,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power2.out",
-      onComplete: () => {
-        ripple.remove();
-      },
-    });
-    
-    setTimeout(() => {
-      navigate(-1);
-    }, 250);
-  };
-
-  // Hover animation - green glow, no zoom
-  const handleBackHover = (isHovering: boolean) => {
-    if (backButtonRef.current) {
-      gsap.to(backButtonRef.current, {
-        backgroundColor: isHovering ? "rgba(16, 185, 129, 0.12)" : "rgba(255, 255, 255, 0.8)",
-        borderColor: isHovering ? "rgba(16, 185, 129, 0.4)" : "rgba(226, 232, 240, 0.8)",
-        boxShadow: isHovering 
-          ? "0 4px 24px -4px rgba(16, 185, 129, 0.3), inset 0 0 0 1px rgba(16, 185, 129, 0.1)" 
-          : "0 1px 3px rgba(0, 0, 0, 0.04)",
-        duration: 0.35,
-        ease: "power2.out",
-      });
-      
-      const icon = backButtonRef.current.querySelector('svg');
-      if (icon) {
-        gsap.to(icon, {
-          color: isHovering ? "#059669" : "#64748b",
-          duration: 0.35,
-          ease: "power2.out",
-        });
-      }
-    }
+  const handleBackClick = () => {
+    navigate(-1);
   };
 
   // Loading screen
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 flex items-center justify-center z-50">
+      <div className={`fixed inset-0 flex items-center justify-center z-50 ${
+        isDark ? "bg-[#14171B]" : "bg-slate-100"
+      }`}>
         <div ref={loadingRef} className="flex flex-col items-center gap-6">
-          {/* Animated Logo */}
           <div className="relative">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-2xl shadow-emerald-200/50">
-              <Sparkles className="w-12 h-12 text-white animate-pulse" />
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#B6FF2E] via-lime-400 to-[#1F2329] flex items-center justify-center shadow-2xl shadow-[#B6FF2E]/30">
+              <Sparkles className="w-10 h-10 text-[#1F2329] animate-pulse" />
             </div>
-            {/* Rotating ring */}
-            <div className="absolute inset-0 rounded-full border-4 border-emerald-200/30 animate-spin" style={{ borderTopColor: '#10b981' }} />
+            <div className="absolute inset-0 rounded-2xl border-2 border-[#B6FF2E]/60 animate-ping" />
           </div>
           
-          {/* Loading text with dots animation */}
           <div className="flex items-center gap-2">
-            <Loader2 className="w-5 h-5 text-emerald-500 animate-spin" />
-            <span className="text-lg font-semibold text-slate-700">Loading Calculators</span>
-            <span className="flex gap-1">
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
-            </span>
-          </div>
-          
-          {/* Loading progress bar */}
-          <div className="w-48 h-1 bg-slate-200 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full animate-loading-bar" />
+            <Loader2 className="w-5 h-5 text-[#B6FF2E] animate-spin" />
+            <span className={`text-base font-bold tracking-wide ${
+              isDark ? "text-white" : "text-[#1F2329]"
+            }`}>Loading Linear Algebra Suite</span>
           </div>
         </div>
-        
-        {/* Add loading animation keyframes */}
-        <style>{`
-          @keyframes loading-bar {
-            0% {
-              width: 0%;
-            }
-            100% {
-              width: 100%;
-            }
-          }
-          .animate-loading-bar {
-            animation: loading-bar 2s ease-in-out forwards;
-          }
-        `}</style>
       </div>
     );
   }
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30 overflow-hidden">
-      {/* Background decorative elements */}
-      <div ref={decorRef} className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div ref={containerRef} className="relative min-h-screen overflow-hidden pb-16 transition-colors duration-300">
+      {/* Background with Math bg.jpg and Deep Graphite / Lime Compute ambient mesh */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <img
+          src={mathBg}
+          alt="Math Background"
+          className={`h-full w-full object-cover object-center filter contrast-125 saturate-150 transition-opacity duration-300 ${
+            isDark ? "opacity-20" : "opacity-10"
+          }`}
+        />
+        <div className={`absolute inset-0 transition-colors duration-300 ${
+          isDark 
+            ? "bg-gradient-to-b from-[#14171B]/90 via-[#1F2329]/85 to-[#14171B]/95" 
+            : "bg-gradient-to-b from-white/90 via-slate-50/75 to-slate-100/90"
+        }`} />
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-[#B6FF2E]/10 blur-3xl" />
+        <div className="absolute bottom-1/3 right-10 h-96 w-96 rounded-full bg-[#B6FF2E]/08 blur-3xl" />
+        <div className="absolute top-1/2 left-10 h-72 w-72 rounded-full bg-[#1F2329]/40 blur-3xl" />
         
+        {/* Blueprint grid effect */}
+        <div 
+          className={`absolute inset-0 ${isDark ? "opacity-[0.06]" : "opacity-[0.03]"}`}
+          style={{
+            backgroundImage: `linear-gradient(to right, #B6FF2E 1px, transparent 1px), linear-gradient(to bottom, #B6FF2E 1px, transparent 1px)`,
+            backgroundSize: "40px 40px"
+          }}
+        />
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
-        {/* Header with icon-only back button */}
-        <div className="flex items-center gap-4 mb-6">
+      {/* Main content - WIDER CONTAINER (1600px max-width) */}
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-10 py-4 sm:py-6">
+        {/* Top Navigation Row - Special Standalone Back Button */}
+        <div className="flex items-center justify-between mb-5">
           <button
             ref={backButtonRef}
             onClick={handleBackClick}
-            onMouseEnter={() => handleBackHover(true)}
-            onMouseLeave={() => handleBackHover(false)}
-            className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 shadow-sm transition-all duration-300 hover:border-emerald-300/60 group"
-            style={{ opacity: 0, transform: 'scale(0.5)' }}
-            aria-label="Go back"
+            className={`group relative inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl backdrop-blur-xl transition-all duration-300 font-semibold text-xs sm:text-sm shadow-lg ${
+              isDark 
+                ? "bg-[#1F2329]/95 border border-[#333A46] text-slate-200 hover:border-[#B6FF2E] hover:text-[#B6FF2E] hover:bg-[#282E37] shadow-black/60 hover:shadow-[#B6FF2E]/20" 
+                : "bg-white/95 border border-slate-300 text-[#1F2329] hover:border-[#1F2329] hover:text-black hover:bg-white shadow-slate-200/70 hover:shadow-md"
+            }`}
+            aria-label="Go back to previous page"
           >
-            <ArrowLeft className="w-5 h-5 text-slate-500 transition-colors duration-300 group-hover:text-emerald-600" strokeWidth={2.5} />
-            {/* Tooltip */}
-            <span className="absolute -bottom-9 left-1/2 -translate-x-1/2 text-[10px] font-medium text-slate-500 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-lg shadow-sm border border-slate-200/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-              Back
+            <div className={`flex items-center justify-center w-7 h-7 rounded-xl transition-transform duration-200 group-hover:-translate-x-1 ${
+              isDark ? "bg-[#14171B] text-[#B6FF2E] border border-[#333A46] group-hover:border-[#B6FF2E]/50" : "bg-slate-100 text-[#1F2329] border border-slate-200"
+            }`}>
+              <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />
+            </div>
+            <span className="font-bold tracking-tight">Back to Dashboard</span>
+            <span className={`hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-md font-mono ${
+              isDark ? "bg-[#14171B] text-slate-400 border border-[#333A46]" : "bg-slate-100 text-slate-500 border border-slate-200"
+            }`}>
+              ESC
             </span>
           </button>
-          
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl shadow-lg shadow-emerald-200/40 ring-1 ring-emerald-300/20">
-              <Sparkles className="w-6 h-6 text-white" />
+        </div>
+
+        {/* Header Title Section - Distinct and Spacious */}
+        <div ref={titleRef} className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-2">
+          <div className="flex items-center gap-3.5">
+            <div className="">
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-clip-text text-transparent tracking-tight">
+              <div className="flex items-center gap-3">
+                <h1 className={`text-2xl sm:text-4xl font-bold font-[Fraunces] tracking-tight ${
+                  isDark 
+                    ? "text-transparent bg-clip-text bg-gradient-to-r from-[#B6FF2E] via-lime-300 to-white" 
+                    : "text-[#1F2329]"
+                }`}>
                   Calculators
                 </h1>
-                <span className="badge-pill inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-emerald-700 bg-emerald-100/80 rounded-full border border-emerald-200/50 backdrop-blur-sm">
+                <span className={`badge-pill inline-flex items-center gap-1.5 px-3 py-1 text-xs font-extrabold rounded-full border backdrop-blur-sm shadow-sm ${
+                  isDark 
+                    ? "text-[#B6FF2E] bg-[#1F2329] border-[#333A46]" 
+                    : "text-[#1F2329] bg-[#B6FF2E] border-[#1F2329]"
+                }`}>
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#B6FF2E] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#B6FF2E]"></span>
                   </span>
                   23 Tools
                 </span>
               </div>
-              <p className="text-sm text-slate-500 mt-0.5 max-w-2xl">
-                Explore intelligent linear algebra tools — from matrices to eigenvectors
+              <p className={`text-xs sm:text-sm mt-1 ${isDark ? "text-slate-300" : "text-slate-700 font-medium"}`}>
+                Explore intelligent linear algebra solvers — from matrices to eigenvectors
               </p>
             </div>
           </div>
         </div>
 
-        {/* Calculator Container */}
+        {/* Calculator Component Container */}
         <div 
           ref={calculatorRef}
-          className="relative"
-          style={{ opacity: 0 }}
+          className="relative w-full"
         >
           <CalculatorApp />
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-slate-400 flex items-center justify-center gap-2">
-            <Grid className="w-3.5 h-3.5" />
-            <span>All tools powered by modern linear algebra algorithms</span>
-            <Layers className="w-3.5 h-3.5" />
+        <div className="mt-10 text-center">
+          <p className={`text-xs flex items-center justify-center gap-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+            <Grid className="w-3.5 h-3.5 text-[#B6FF2E]" />
+            <span>All 23 tools powered by modern linear algebra algorithms</span>
+            <Layers className="w-3.5 h-3.5 text-[#B6FF2E]" />
           </p>
         </div>
       </div>

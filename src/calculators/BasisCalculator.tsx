@@ -1,5 +1,6 @@
 // components/BasisCalculator.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'basis' | 'dimension' | 'span' | 'independence';
 
@@ -767,6 +768,15 @@ const BasisCalculator: React.FC = () => {
             )}
             <div className="flex-1">
               <p className={`font-medium ${result.includes('✅') ? 'text-green-800' : result.includes('❌') || result.includes('⚠️') ? 'text-yellow-800' : 'text-blue-800'}`}>{result}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Basis & Vector Space - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vectors:\n${vectors.map((v, i) => `v${i+1} = [${v.join(', ')}]`).join('\n')}\nSelected Operation: ${operation}`}
+                fileName={`basis_${operation}_result`}
+              />
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 // components/LinearCombination.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 type Operation = 'combination' | 'solve' | 'span' | 'independence';
 
@@ -962,6 +963,15 @@ const LinearCombination: React.FC = () => {
               }`}>
                 {result}
               </p>
+            </div>
+            <div className="flex-shrink-0">
+              <PDFExport
+                title={`Linear Combination - ${operation.toUpperCase()}`}
+                data={result}
+                steps={steps}
+                inputs={`Vectors:\n${vectors.map((v, i) => `v${i+1} = (${v.join(', ')})`).join('\n')}${operation === 'combination' ? `\nScalars: [${scalars.join(', ')}]` : ''}${operation === 'solve' ? `\nTarget Vector: (${targetVector.join(', ')})` : ''}\nOperation: ${operation}`}
+                fileName={`linear_combination_${operation}`}
+              />
             </div>
           </div>
         </div>

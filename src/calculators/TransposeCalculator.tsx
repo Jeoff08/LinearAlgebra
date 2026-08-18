@@ -1,5 +1,6 @@
 // components/TransposeCalculator.tsx
 import React, { useState } from "react";
+import PDFExport from "./PDFExport";
 
 interface Step {
   title: string;
@@ -534,6 +535,18 @@ const TransposeCalculator: React.FC = () => {
                     </div>
                   )}
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="Transpose Calculator (Aᵀ)"
+                  data={`Original Size: ${matrix.length}×${matrix[0]?.length || 0}\nTransposed Size: ${matrix[0]?.length || 0}×${matrix.length}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Matrix A (${matrix.length}×${matrix[0]?.length || 0}):\n${matrix.map(r => `[${r.join(', ')}]`).join('\n')}`}
+                  fileName="matrix_transpose"
+                />
               </div>
             </div>
           </div>

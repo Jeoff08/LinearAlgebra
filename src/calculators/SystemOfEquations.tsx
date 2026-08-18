@@ -257,12 +257,12 @@ const SystemOfEquations: React.FC = () => {
 
   // Explanation content
   const explanationContent = (
-    <div className="space-y-2 text-sm text-blue-900">
-      <p><span className="font-semibold">How Gaussian Elimination Works:</span> This method solves systems of linear equations by transforming the augmented matrix into row echelon form through row operations, then solving for variables using back substitution.</p>
+    <div className="space-y-2 text-xs text-[var(--muted)]">
+      <p><span className="font-semibold text-[var(--heading)]">How Gaussian Elimination Works:</span> This method solves systems of linear equations by transforming the augmented matrix into row echelon form through row operations, then solving for variables using back substitution.</p>
       <ul className="list-disc pl-5 space-y-1">
-        <li><span className="font-medium">Forward Elimination:</span> Transform the matrix into row echelon form using row operations (swapping rows, multiplying rows, adding multiples of rows).</li>
-        <li><span className="font-medium">Back Substitution:</span> Solve for variables starting from the last row and working backwards, substituting known values into previous equations.</li>
-        <li><span className="font-medium">Verification:</span> Check the solution by plugging the values back into the original equations.</li>
+        <li><span className="font-medium text-[var(--heading)]">Forward Elimination:</span> Transform the matrix into row echelon form using row operations (swapping rows, multiplying rows, adding multiples of rows).</li>
+        <li><span className="font-medium text-[var(--heading)]">Back Substitution:</span> Solve for variables starting from the last row and working backwards, substituting known values into previous equations.</li>
+        <li><span className="font-medium text-[var(--heading)]">Verification:</span> Check the solution by plugging the values back into the original equations.</li>
       </ul>
     </div>
   );
@@ -386,17 +386,17 @@ Verification: Check the solution by plugging the values back into the original e
               <div className="flex-1">
                 {result.uniqueSolution ? (
                   <>
-                    <p className="font-medium text-green-800">Solution Found:</p>
-                    <div className="flex flex-wrap gap-4 mt-2">
+                    <p className="font-bold text-xs uppercase tracking-wider text-[#B6FF2E]">Solution Found:</p>
+                    <div className="flex flex-wrap gap-2.5 mt-2">
                       {Object.entries(result.variables).map(([varName, value]) => (
-                        <span key={varName} className="font-mono text-green-800 bg-green-100 px-3 py-1 rounded-md">
+                        <span key={varName} className="font-mono text-xs font-bold text-[#B6FF2E] bg-slate-100 dark:bg-[#14171B] border border-[var(--line)] px-3 py-1.5 rounded-xl shadow-sm">
                           {varName} = {value}
                         </span>
                       ))}
                     </div>
                   </>
                 ) : (
-                  <p className="text-red-800">{result.steps[0]}</p>
+                  <p className="text-red-500 font-bold text-sm">{result.steps[0]}</p>
                 )}
               </div>
               {result.uniqueSolution && (
@@ -405,6 +405,7 @@ Verification: Check the solution by plugging the values back into the original e
                     title="System of Linear Equations - Solution"
                     data={Object.entries(result.variables).map(([k, v]) => `${k} = ${v}`).join('\n')}
                     steps={result.steps}
+                    inputs={`Equations:\n${equations.filter(e => e.trim()).join('\n')}`}
                     explanation={explanationText}
                     fileName="system_of_equations_solution"
                   />
@@ -415,18 +416,18 @@ Verification: Check the solution by plugging the values back into the original e
 
           {/* Steps with explanation beside */}
           {result.uniqueSolution && showSteps && (
-            <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-100 animate-in fade-in duration-300">
-              <div className="flex items-center gap-2 mb-3">
-                <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-4 rounded-xl border border-[var(--line)] bg-[var(--panel)] animate-in fade-in duration-300">
+              <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[var(--line)]">
+                <svg className="w-4 h-4 text-[#B6FF2E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
-                <h4 className="font-medium text-indigo-800">Step-by-Step Solution</h4>
-                <span className="text-xs text-indigo-600 ml-auto">Gaussian Elimination</span>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--heading)]">Step-by-Step Solution</h4>
+                <span className="text-xs text-[var(--muted)] ml-auto">Gaussian Elimination</span>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {/* Steps content - takes 2/3 of the space */}
-                <div className="lg:col-span-2 space-y-1 font-mono text-sm text-indigo-900 whitespace-pre-wrap max-h-[400px] overflow-y-auto">
+                {/* Steps content - pure white font on dark graphite */}
+                <div className="lg:col-span-2 space-y-1 font-mono text-xs sm:text-sm text-[var(--heading)] whitespace-pre-wrap max-h-[400px] overflow-y-auto leading-relaxed">
                   {result.steps.map((step, idx) => (
                     <div key={idx} className="py-1">
                       {step}
@@ -436,12 +437,12 @@ Verification: Check the solution by plugging the values back into the original e
                 
                 {/* Explanation - takes 1/3 of the space */}
                 {showExplanation && (
-                  <div className="lg:col-span-1 p-3 bg-blue-50 rounded-lg border border-blue-200 max-h-[400px] overflow-y-auto">
+                  <div className="lg:col-span-1 p-3.5 bg-slate-100 dark:bg-[#14171B] rounded-xl border border-[var(--line)] max-h-[400px] overflow-y-auto text-xs text-[var(--muted)] leading-relaxed">
                     <div className="flex items-center gap-2 mb-2">
-                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-[#B6FF2E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <h5 className="font-medium text-blue-800 text-sm">Explanation</h5>
+                      <h5 className="font-bold text-[var(--heading)] text-xs uppercase tracking-wider">Explanation</h5>
                     </div>
                     {explanationContent}
                   </div>

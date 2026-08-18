@@ -1,5 +1,6 @@
 // components/LeastSquares.tsx
 import React, { useState } from 'react';
+import PDFExport from './PDFExport';
 
 interface Step {
   title: string;
@@ -558,6 +559,18 @@ const LeastSquares: React.FC = () => {
                     <span className="font-mono text-sm font-bold text-indigo-600">{residualNorm.toFixed(6)}</span>
                   </div>
                 </div>
+              </div>
+              <div className="flex-shrink-0 ml-auto">
+                <PDFExport
+                  title="Least Squares Solver (Ax = b)"
+                  data={`Matrix Size: ${matrixA.length}×${matrixA[0]?.length || 0}\nUnknowns: ${matrixA[0]?.length || 0}\nResidual Norm: ${residualNorm.toFixed(6)}\n${result}`}
+                  steps={steps.map(s => ({
+                    step: `${s.title}\n${s.description}${s.matrix ? '\n' + s.matrix.map(r => `[${r.map(v => v.toFixed(4)).join(', ')}]`).join('\n') : ''}${s.vector ? '\n[' + s.vector.map(v => v.toFixed(4)).join(', ') + ']' : ''}`,
+                    explanation: s.explanation
+                  }))}
+                  inputs={`Matrix A (${matrixA.length}×${matrixA[0]?.length || 0}):\n${matrixA.map(r => `[${r.join(', ')}]`).join('\n')}\nVector b = [${vectorB.join(', ')}]`}
+                  fileName="least_squares_solution"
+                />
               </div>
             </div>
           </div>
